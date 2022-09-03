@@ -6,18 +6,17 @@ import NfcManager, { NfcTech } from "react-native-nfc-manager";
 NfcManager.start();
 
 function App() {
-  const [tag, setTag] = useState("");
-
+  const [tag, setTag] = useState(null);
   async function readNdef() {
     try {
       // register for the NFC tag with NDEF in it
       await NfcManager.requestTechnology(NfcTech.Ndef);
       // the resolved tag object will contain `ndefMessage` property
       const tag = await NfcManager.getTag();
-      setTag(tag);
       console.warn("Tag found", tag);
+      setTag(tag);
     } catch (ex) {
-      console.warn("Oops!", ex);
+      console.warn("Oops!", JSON.stringify(ex));
     } finally {
       // stop the nfc scanning
       NfcManager.cancelTechnologyRequest();
@@ -27,7 +26,7 @@ function App() {
   return (
     <View style={styles.wrapper}>
       <TouchableOpacity onPress={readNdef}>
-        <Text>Scan a Tag</Text>
+        <Text>Scan a Tag gydj</Text>
         <Text>{tag}</Text>
       </TouchableOpacity>
     </View>
